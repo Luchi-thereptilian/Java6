@@ -2,18 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User Info</title>
 </head>
 <body>
 <div th:switch="${@auth.authenticated}">
+    <!-- Nếu đã đăng nhập -->
     <ul th:case="true">
         <li>Username: <b>[[${@auth.username}]]</b></li>
         <li>Roles: <b th:text="${@auth.roles}"></b></li>
         <li><a href="/logout">Sign-out</a></li>
-        <li th:if="${@auth.hasAny Role('ADMIN')}">
+        <li th:if="${@auth.hasAnyRole('ADMIN')}">
             <a href="#">Goto Administration</a>
         </li>
     </ul>
+
+    <!-- Nếu chưa đăng nhập -->
     <ul th:case="false">
         <li>Bạn chưa đăng nhập</li>
     </ul>

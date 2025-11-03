@@ -1,4 +1,4 @@
-package Bai2.config;
+package Bai3.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,17 +43,30 @@ public class Security {
             config.anyRequest().permitAll();
         });
 // Form đăng nhập mặc định
-        http.formLogin(config -> config.permitAll());
-// Form đăng nhập
-        http.formLogin(config -> {
+        http.formLogin(config ->{
+            config.loginPage("/login/form");
+            config.loginProcessingUrl("/login/check");
+            config.defaultSuccessUrl("/login/success");
+            config.failureUrl("/login?failure");
             config.permitAll();
-        });
+            config.usernameParameter("username");
+            config.passwordParameter("password");
+                }
+                );
 // Ghi nhớ tài khoản
         http.rememberMe(config -> {
-            config.tokenValiditySeconds(3 * 24 * 60 * 60);
+            config.tokenValiditySeconds(3*24*60*60);
+            config.rememberMeParameter("remember-me");
+            config.rememberMeCookieName("rememberMe");
         });
 // Đăng xuất
-        http.logout(Customizer.withDefaults());
+        http.logout(config -> {
+            config.logoutUrl("/logout");
+            config.logoutSuccessUrl("/login/exit");
+            config.clearAuthentication(true);
+            config.invalidateHttpSession(true);
+            config.deleteCookies("remember-me");
+        });
         return http.build();
     }
 }

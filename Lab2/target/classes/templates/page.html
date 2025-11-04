@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Demo</title>
+</head>
+<body>
+<h2 th:text="${message}">Message here</h2>
+
+<hr>
+
+<a href="/">Home</a> |
+<a href="/poly/url0">Url0</a> |
+<a href="/poly/url1">Url1</a> |
+<a href="/poly/url2">Url2</a> |
+<a href="/poly/url3">Url3</a> |
+<a href="/poly/url4">Url4</a>
+<hr>
+<div th:switch="${@auth.authenticated}">
+    <!-- Nếu đã đăng nhập -->
+    <ul th:case="true">
+        <li>Username: <b>[[${@auth.username}]]</b></li>
+        <li>Roles: <b th:text="${@auth.roles}"></b></li>
+        <li><a href="/logout">Sign-out</a></li>
+        <li th:if="${@auth.hasAnyRole('ADMIN')}">
+            <a href="#">Goto Administration</a>
+        </li>
+    </ul>
+
+    <!-- Nếu chưa đăng nhập -->
+    <ul th:case="false">
+        <li>Bạn chưa đăng nhập</li>
+    </ul>
+</div>
+</body>
+</html>

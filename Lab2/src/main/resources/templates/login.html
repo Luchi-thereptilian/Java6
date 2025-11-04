@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${@auth.authenticated}">
+
+<i th:text="${message}"></i>
+<form action="/login/check" method="post">
+    <p> Username: <input name="username"></p>
+    <p> Password: <input name="password"></p>
+    <p> <input name="remember-me" type="checkbox">Remember me?</p>
+    <p><button>Login</button></p>
+
+</form>
+</div>
+</body>
+</html>
